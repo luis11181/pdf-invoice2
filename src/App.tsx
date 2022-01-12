@@ -19,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<AuthPage />} />
         <Route path="/signIn" element={<AuthPage />} />
+        <Route path="/crear-comprobante" element={<AuthPage />} />
         <Route path="/counter" element={<Counter />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

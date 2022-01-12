@@ -9,12 +9,15 @@
 }
 
 .logo {
-  font-size: 2rem;
-  color: white;
+  height: 2rem;
 }
 
 .active {
   color: red;
+}
+
+.inactive {
+  color: white;
 }
 
 .nav ul {
