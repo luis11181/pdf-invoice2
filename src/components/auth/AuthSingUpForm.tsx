@@ -1,28 +1,22 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { css, jsx } from "@emotion/react";
 import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-  signOut,
-  getAuth,
-  onAuthStateChanged,
+
   updateProfile,
-  sendEmailVerification,
 } from "firebase/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { auth } from "../../firebase";
 import { Button, FormControl, InputLabel, Typography } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import Input from "@mui/material/Input";
-import FilledInput from "@mui/material/FilledInput";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormHelperText from "@mui/material/FormHelperText";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { AccountCircle } from "@mui/icons-material";
+
 import { useState } from "react";
 
 interface IFormInput {
@@ -60,9 +54,7 @@ const googleRegister = () => {
     });
 };
 
-const logout = () => {
-  signOut(auth);
-};
+
 
 const AuthForm = () => {
   const [values, setValues] = useState<IValues>({
@@ -73,7 +65,7 @@ const AuthForm = () => {
   const {
     register,
     handleSubmit,
-    watch, // console.log(watch("example")); // watch input value by passing the name of it, and then it can trigger actions if changes
+    //watch, // console.log(watch("example")); // watch input value by passing the name of it, and then it can trigger actions if changes
     formState: { errors },
   } = useForm();
 

@@ -1,15 +1,9 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { css, jsx } from "@emotion/react";
 import {
   signInWithPopup,
   GoogleAuthProvider,
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-  getAuth,
-  onAuthStateChanged,
 } from "firebase/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { auth } from "../../firebase";
@@ -20,9 +14,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormHelperText from "@mui/material/FormHelperText";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { AccountCircle } from "@mui/icons-material";
+
 import { useState } from "react";
-import { Interface } from "readline";
+
 import { useNavigate } from "react-router-dom";
 
 interface IFormInput {
@@ -43,10 +37,6 @@ interface IFromProps {
 //to auth woth ggog;e
 const provider = new GoogleAuthProvider();
 
-const logout = () => {
-  signOut(auth);
-};
-
 const AuthForm: React.FC<IFromProps> = (props): JSX.Element => {
   // let location: any = useLocation();
   // //si hubo una ruta anterio la pone en la variable, en caso contrario lleva a la pronmcipal
@@ -61,7 +51,7 @@ const AuthForm: React.FC<IFromProps> = (props): JSX.Element => {
   const {
     register,
     handleSubmit,
-    watch, // console.log(watch("example")); // watch input value by passing the name of it, and then it can trigger actions if changes
+    //watch, // console.log(watch("example")); // watch input value by passing the name of it, and then it can trigger actions if changes
     formState: { errors },
   } = useForm();
 

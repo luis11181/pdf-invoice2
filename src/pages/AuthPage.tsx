@@ -1,11 +1,9 @@
 import AuthFormSignIn from "../components/auth/AuthSingInForm";
 import AuthFormSignUp from "../components/auth/AuthSingUpForm";
-import { css, jsx } from "@emotion/react";
 import { useState } from "react";
 import { Box, Button } from "@mui/material";
-import { auth } from "../firebase";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useAppDispatch } from "../app/hooks";
 
 export default function AuthPage() {
   const [isSignIn, setIsSignIn] = useState(true);

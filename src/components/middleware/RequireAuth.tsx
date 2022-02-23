@@ -1,11 +1,5 @@
-import {
-  Routes,
-  Route,
-  useNavigate,
-  useLocation,
-  Navigate,
-} from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { useLocation, Navigate } from "react-router-dom";
+import { useAppSelector } from "../../app/hooks";
 
 // type Props = {
 //   title: string;
@@ -18,7 +12,7 @@ function RequireAuth({ children }: { children: JSX.Element }) {
     (state) => state.main.autenticado
   );
   const location = useLocation();
-  let navigate = useNavigate();
+  //let navigate = useNavigate();
 
   if (!authed) {
     // Redirect them to the /login page, but save the current location they were
