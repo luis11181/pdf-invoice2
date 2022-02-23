@@ -119,8 +119,6 @@ const AuthForm = () => {
 
   return (
     <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -142,6 +140,7 @@ const AuthForm = () => {
 
       <Box
         component="form"
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
           "& .MuiTextField-root": { m: 1, width: "25ch" },
           display: "flex",

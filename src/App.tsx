@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import {
   Routes,
   Route,
@@ -19,8 +19,12 @@ import RequireAuth from "./components/middleware/RequireAuth";
 import AuthPage from "./pages/AuthPage";
 import MainPage from "./pages/MainPage";
 import NotFound from "./pages/NotFound";
+import useCheckAuth from "./hooks/useCheckAuth";
 
 function App() {
+  //Hook para checar el estado de autenticacion y subscribirse a sus cambios
+  useCheckAuth();
+
   return (
     <Layout>
       {
@@ -29,7 +33,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/signIn" element={<AuthPage />} />
-        <Route path="/crear-comprobante" element={<AuthPage />} />
+        <Route path="/crear-comprobante" element={<MainPage />} />
         <Route
           path="/counter"
           element={

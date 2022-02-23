@@ -128,8 +128,6 @@ const AuthForm: React.FC<IFromProps> = (props): JSX.Element => {
 
   return (
     <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -151,6 +149,7 @@ const AuthForm: React.FC<IFromProps> = (props): JSX.Element => {
 
       <Box
         component="form"
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
           "& .MuiTextField-root": { m: 1, width: "25ch" },
           display: "flex",
