@@ -19,10 +19,14 @@ const initialState: CounterState = {
 // typically used to make async requests.
 export const incrementAsync = createAsyncThunk(
   "counter/fetchCount",
-  async (amount: number) => {
-    const response = await fetchCount(amount);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
+  async (amount: number, thunkAPI) => {
+    try {
+      // The value we return becomes the `fulfilled` action payload
+      const response = await fetchCount(amount);
+      return response.data;
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue({ error: error.data });
+    }
   }
 );
 
@@ -56,6 +60,10 @@ export const counterSlice = createSlice({
       .addCase(incrementAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.value += action.payload;
+      })
+      .addCase(incrementAsync.rejected, (state, action) => {
+        console.error(action.payload);
+        state.status = "idle";
       });
   },
 });
