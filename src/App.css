@@ -1,39 +1,37 @@
-.App {
-  text-align: center;
+/*%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+//!UTILES centrar, alinear
+//clase para centrar tablas y otros objetos */
+.center {
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/*centra objetos verticalmente */
+
+.vertical_center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-70%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-float infinite 3s ease-in-out;
+/** tamaños de letra - pantalla
+cambia tamaño todas las letras  para pantalla pequeña   */
+@media (max-width: 767px) {
+  /* change this, by default 1140px */
+  html {
+    font-size: 90% !important;
   }
 }
 
-.App-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-}
-
-.App-link {
-  color: rgb(112, 76, 182);
-}
-
-@keyframes App-logo-float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(10px);
-  }
-  100% {
-    transform: translateY(0px);
+/* define un tamaño maximo de j pantalla  */
+@media (min-width: 1200px) {
+  .container {
+    width: 95%;
+    margin-right: auto;
+    margin-left: auto;
+    max-width: 1500px;
   }
 }

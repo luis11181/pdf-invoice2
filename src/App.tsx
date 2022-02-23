@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/layout/Layout";
 import LoadingSpinner from "./components/UI/LoadingSpinner";
 
+//* importa estilos generales que yo defini
 import "./App.css";
 
 import { Counter } from "./pages/CounterPage";
@@ -11,6 +12,7 @@ import AuthPage from "./pages/AuthPage";
 import MainPage from "./pages/MainPage";
 import NotFound from "./pages/NotFound";
 import useCheckAuth from "./hooks/useCheckAuth";
+import NewInvoice from "./pages/NewInvoice";
 
 function App() {
   //Hook para checar el estado de autenticacion y subscribirse a sus cambios
@@ -24,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/signIn" element={<AuthPage />} />
-        <Route path="/crear-comprobante" element={<MainPage />} />
+        <Route path="/crear-comprobante" element={<NewInvoice />} />
         <Route
           path="/counter"
           element={

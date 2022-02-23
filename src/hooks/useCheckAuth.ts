@@ -3,6 +3,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { useEffect } from "react";
 import { changeAuthState } from "../app/mainStateSlice";
+import { changeCorreoUsuario } from "../app/mainStateSlice";
+import { changeNombreUsuario } from "../app/mainStateSlice";
+import { selectCorreo } from "../app/mainStateSlice";
 
 export default function useCheckAuth() {
   const dispatch = useAppDispatch();
@@ -10,11 +13,14 @@ export default function useCheckAuth() {
   const authed: boolean | null = useAppSelector(
     (state) => state.main.autenticado
   );
+  const correo: string | null = useAppSelector(selectCorreo);
 
   //revisa si esta logueado
   useEffect(() => {
     if (auth.currentUser) {
       dispatch(changeAuthState(true));
+      dispatch(changeNombreUsuario(auth.currentUser.displayName));
+      dispatch(changeCorreoUsuario(auth.currentUser.email));
     }
     console.log("corrio la funcion de CheckAuth en el use effect");
   }, []);
@@ -29,6 +35,8 @@ export default function useCheckAuth() {
       const email = user.email;
       console.log(displayName, email);
       dispatch(changeAuthState(true));
+      dispatch(changeNombreUsuario(displayName));
+      dispatch(changeCorreoUsuario(email));
 
       console.log("corrio la funcion de CheckAuth");
 
@@ -49,6 +57,8 @@ export default function useCheckAuth() {
       //user.providerData.profile.uid
     } else {
       dispatch(changeAuthState(false));
+      dispatch(changeNombreUsuario(null));
+      dispatch(changeCorreoUsuario(null));
       // User is signed out
       // ...
     }

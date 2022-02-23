@@ -16,7 +16,7 @@ import Container from "@mui/material/Container";
 import logo from "../../assets/psi.png";
 import Avatar from "@mui/material/Avatar";
 
-import { green, pink } from "@mui/material/colors";
+import { green } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";

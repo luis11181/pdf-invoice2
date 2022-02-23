@@ -7,7 +7,6 @@ import { useAppDispatch } from "../app/hooks";
 
 export default function AuthPage() {
   const [isSignIn, setIsSignIn] = useState(true);
-  const dispatch = useAppDispatch();
 
   // const authed: boolean | null = useAppSelector(
   //   (state) => state.main.autenticado
