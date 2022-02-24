@@ -11,16 +11,14 @@ import {
   Typography,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
-import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useRef, useState } from "react";
 import { selectCorreo } from "../app/mainStateSlice";
 import { useAppSelector } from "../app/hooks";
 import ReactToPrint from "react-to-print";
-import { useNavigate } from "react-router-dom";
-import newInvoice from "../features/invoice/newInvoice";
-import LoadingButton from "@mui/lab/LoadingButton";
+import { useParams } from "react-router-dom";
+
 interface IFormInput {
   //firstName: string;
   tipoComprobante: string;
@@ -66,10 +64,10 @@ const NewInvoice: React.FC = (): JSX.Element => {
   const [values, setValues] = useState<IValues>({
     error: null,
   });
-  const [loading, setLoading] = useState(false);
+
+  let { numero } = useParams();
 
   const componentRef = useRef(null);
-  let navigate = useNavigate();
   //const [items, setItems] = useState<Array<any>>([]);
 
   const {
@@ -93,21 +91,15 @@ const NewInvoice: React.FC = (): JSX.Element => {
 
   const correoUsuarioActual = useAppSelector(selectCorreo);
 
-  const onSubmit: SubmitHandler<FormValues> = async (data, e) => {
-    //e es el objeto evento normal
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
     //console.log(data);
-    setLoading(true);
 
     const resultado = {
       ...data,
       fechaCreacion: new Date(),
       usuarioCreacion: correoUsuarioActual,
     };
-    //alert(JSON.stringify(resultado));
-
-    await newInvoice();
-
-    navigate(`/detalle/${data.numero}`);
+    alert(JSON.stringify(resultado));
   };
 
   return (
@@ -482,17 +474,6 @@ const NewInvoice: React.FC = (): JSX.Element => {
           >
             Cancelar
           </Button>
-          {"   "}
-          <LoadingButton
-            color="secondary"
-            loading={loading}
-            loadingPosition="start"
-            startIcon={<SaveIcon />}
-            variant="contained"
-            type="submit"
-          >
-            Save
-          </LoadingButton>
         </Box>
       </Box>
       <Box sx={{ m: 1 }} />

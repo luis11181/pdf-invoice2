@@ -1,0 +1,21 @@
+@media all {
+  .page-container {
+    display: none;
+  }
+}
+
+@media print {
+  body {
+    margin: 5rem;
+  }
+
+  .no-break-inside {
+    /** apply this class to every component that shouldn't be cut off between to pages of your PDF/HTML */
+    break-inside: "avoid";
+  }
+
+  .break-before {
+    /** apply this class to every component that should always display on next page */
+    break-before: "always";
+  }
+}

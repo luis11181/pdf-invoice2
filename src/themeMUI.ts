@@ -1,6 +1,6 @@
 import { createTheme, styled } from "@mui/material/styles";
 import { orange } from "@mui/material/colors";
-
+import type {} from "@mui/lab/themeAugmentation"; //to add material ui lab items
 declare module "@mui/material/styles" {
   interface Theme {
     status: {
@@ -32,9 +32,10 @@ const theme = createTheme({
       dark: "#ba000d",
       contrastText: "#000",
     },
-    // success: {
-    //   dark: "#009688",
-    // },
+    success: {
+      main: "#009688", //todos los que fefina deben tener un main
+      dark: "#009688",
+    },
   },
 });
 

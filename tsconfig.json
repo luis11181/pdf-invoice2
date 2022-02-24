@@ -6,10 +6,13 @@
       "dom.iterable",
       "esnext"
     ],
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    //"allowJs": true,
     // "types": [
     //   "*/@emotion/react/types/css-prop"
     // ],
-    "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,

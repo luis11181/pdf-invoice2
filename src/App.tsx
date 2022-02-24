@@ -26,7 +26,15 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/signIn" element={<AuthPage />} />
-        <Route path="/crear-comprobante" element={<NewInvoice />} />
+        <Route
+          path="/crear-comprobante"
+          element={
+            <RequireAuth>
+              <NewInvoice />
+            </RequireAuth>
+          }
+        />
+        <Route path="/detalle/:numero" element={<MainPage />} />
         <Route
           path="/counter"
           element={
