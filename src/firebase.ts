@@ -57,6 +57,7 @@ export type Icomprobante = {
   banco: string;
   tipoComprobante: string;
   numero: string;
+  numeroValor: number;
   observaciones: string;
   usuarioCreacion: string;
   usuarioModificacion: string | null;

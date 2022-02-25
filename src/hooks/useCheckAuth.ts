@@ -1,7 +1,7 @@
 import { auth } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { changeAuthState } from "../app/mainStateSlice";
 import { changeCorreoUsuario } from "../app/mainStateSlice";
 import { changeNombreUsuario } from "../app/mainStateSlice";
@@ -16,14 +16,14 @@ export default function useCheckAuth() {
   const correo: string | null = useAppSelector(selectCorreo);
 
   //revisa si esta logueado
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (auth.currentUser) {
       dispatch(changeAuthState(true));
       dispatch(changeNombreUsuario(auth.currentUser.displayName));
       dispatch(changeCorreoUsuario(auth.currentUser.email));
     }
     //console.log("corrio la funcion de CheckAuth en el use effect");
-  }, []);
+  }, [dispatch]);
 
   // se subscribe a cambios en el estado de autenticacion
   onAuthStateChanged(auth, (user) => {

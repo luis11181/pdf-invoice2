@@ -31,24 +31,6 @@ interface IValues {
   error: null | string;
 }
 
-type FormValues = {
-  tipoComprobante: "egreso" | "ingresos" | "gastos";
-  numero: string;
-  observaciones: string;
-  formaPago: string;
-  banco: string;
-  fechaAplica: Date;
-  chequeNumero: string;
-  codigoPuc: string;
-  concepto: string;
-  valor: number;
-  lista: {
-    codigoPuc: string;
-    concepto: string;
-    valor: number;
-  }[];
-};
-
 type Iparams = {
   year: string;
   tipoComprobante: "egreso" | "ingresos" | "gastos";

@@ -35,7 +35,7 @@ type FormValues = {
   observaciones: string;
   formaPago: string;
   banco: string;
-  fechaAplica: Date;
+  fechaAplica: string;
   chequeNumero: string;
   codigoPuc: string;
   concepto: string;
@@ -59,7 +59,6 @@ const NewInvoice: React.FC = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
   const [ultimoNumero, setUltimoNumero] = useState<string | null>(null);
 
-  const componentRef = useRef(null);
   let navigate = useNavigate();
   //const [items, setItems] = useState<Array<any>>([]);
 
@@ -77,7 +76,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
   } = useForm<FormValues>();
 
   const watchTipoComprobante = watch(["tipoComprobante"]); // you can also target specific fields by their names
-  const watchFechaAplica = watch(["fechaAplica"]);
+  // const watchFechaAplica = watch(["fechaAplica"]);
 
   const {
     fields,
@@ -119,7 +118,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watchFechaAplica, watchTipoComprobante]);
+  }, [watchTipoComprobante]);
 
   if (ultimoNumero !== null) {
     setValue("numero", ultimoNumero, {});
@@ -147,6 +146,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
     let year = dataFechaAplica.getFullYear().toString();
     let tipoComprobante = data.tipoComprobante;
     let numero = data.numero.trim();
+    let numeroValor = Number(data.numero.trim().replace(/\D+$/g, ""));
     let observaciones = data.observaciones;
     let formaPago = data.formaPago;
     let banco = data.banco;
@@ -171,6 +171,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
         year,
         tipoComprobante,
         numero,
+        numeroValor,
         observaciones,
         formaPago,
         banco,
@@ -210,7 +211,6 @@ const NewInvoice: React.FC = (): JSX.Element => {
       </Typography>
 
       <Box
-        ref={componentRef}
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         sx={{
@@ -575,11 +575,6 @@ const NewInvoice: React.FC = (): JSX.Element => {
       <Typography variant="body1" sx={{ color: "red" }}>
         {values.error}
       </Typography>
-
-      <ReactToPrint
-        trigger={() => <button>Print this out!</button>}
-        content={() => componentRef.current}
-      />
     </Box>
   );
 };

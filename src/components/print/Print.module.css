@@ -1,5 +1,12 @@
 @media all {
-  .page-container {
+  /* .pageContainer {
+    display: none;
+  } */
+}
+
+/* hides the material to print for the page viewer */
+@media screen {
+  .pageContainer {
     display: none;
   }
 }

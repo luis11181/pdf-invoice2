@@ -9,7 +9,7 @@ export interface CounterState {
 }
 
 const initialState: CounterState = {
-  autenticado: null,
+  autenticado: true,
   darkMode: false,
   correoUsuario: null,
   nombreUsuario: null,
