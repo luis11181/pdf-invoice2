@@ -13,6 +13,7 @@ import MainPage from "./pages/MainPage";
 import NotFound from "./pages/NotFound";
 import useCheckAuth from "./hooks/useCheckAuth";
 import NewInvoice from "./pages/NewInvoice";
+import InvoiceDetail from "./pages/InvoiceDetail";
 
 function App() {
   //Hook para checar el estado de autenticacion y subscribirse a sus cambios
@@ -36,7 +37,7 @@ function App() {
         />
         <Route
           path="/detalle/:tipoComprobante/:year/:numero"
-          element={<MainPage />}
+          element={<InvoiceDetail />}
         />
         <Route
           path="/counter"

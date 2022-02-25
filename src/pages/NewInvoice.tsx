@@ -139,9 +139,9 @@ const NewInvoice: React.FC = (): JSX.Element => {
     } catch (error: any) {
       setLoading(false);
       if (error.message && typeof error.message === "string") {
-        setValues({ ...values, error: error.message });
+        setValues((anterior) => ({ ...anterior, error: error.message }));
       } else {
-        setValues({ ...values, error: "Error inesperado" });
+        setValues((anterior) => ({ ...anterior, error: "Error inesperado" }));
       }
     }
   };
