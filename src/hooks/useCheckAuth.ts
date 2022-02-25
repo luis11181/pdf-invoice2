@@ -22,7 +22,7 @@ export default function useCheckAuth() {
       dispatch(changeNombreUsuario(auth.currentUser.displayName));
       dispatch(changeCorreoUsuario(auth.currentUser.email));
     }
-    console.log("corrio la funcion de CheckAuth en el use effect");
+    //console.log("corrio la funcion de CheckAuth en el use effect");
   }, []);
 
   // se subscribe a cambios en el estado de autenticacion
@@ -33,12 +33,12 @@ export default function useCheckAuth() {
       // The user object has basic properties such as display name, email, etc.
       const displayName = user.displayName;
       const email = user.email;
-      console.log(displayName, email);
+      // console.log(displayName, email);
       dispatch(changeAuthState(true));
       dispatch(changeNombreUsuario(displayName));
       dispatch(changeCorreoUsuario(email));
 
-      console.log("corrio la funcion de CheckAuth");
+      // console.log("corrio la funcion de CheckAuth");
 
       // const photoURL = user.photoURL;
       // const emailVerified = user.emailVerified;
@@ -50,9 +50,9 @@ export default function useCheckAuth() {
       // ...
       //!there are maybe problems if user sign with a provider, data is extracted like this
       user.providerData.forEach((profile) => {
-        console.log("Sign-in provider: " + profile.providerId);
-        console.log("  Provider-specific UID: " + profile.uid);
-        console.log("  Name: " + profile.displayName);
+        //console.log("Sign-in provider: " + profile.providerId);
+        //console.log("  Provider-specific UID: " + profile.uid);
+        // console.log("  Name: " + profile.displayName);
       });
       //user.providerData.profile.uid
     } else {

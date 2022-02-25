@@ -21,31 +21,19 @@ import ReactToPrint from "react-to-print";
 import { useNavigate } from "react-router-dom";
 import newInvoice from "../features/invoice/newInvoice";
 import LoadingButton from "@mui/lab/LoadingButton";
-interface IFormInput {
-  //firstName: string;
-  tipoComprobante: string;
-  numero: string;
-  codigoPuc: string;
-  concepto: string;
-  valor: number;
-  observaciones: string;
-  formaPago: string;
-  banco: string;
-  fechaAplica: string;
-  chequeNumero: string;
-}
+import { Timestamp } from "firebase/firestore";
 
 interface IValues {
   error: null | string;
 }
 
 type FormValues = {
-  tipoComprobante: string;
+  tipoComprobante: "egreso" | "ingresos" | "gastos";
   numero: string;
   observaciones: string;
   formaPago: string;
   banco: string;
-  fechaAplica: string;
+  fechaAplica: Date;
   chequeNumero: string;
   codigoPuc: string;
   concepto: string;
@@ -98,16 +86,64 @@ const NewInvoice: React.FC = (): JSX.Element => {
     //console.log(data);
     setLoading(true);
 
-    const resultado = {
-      ...data,
-      fechaCreacion: new Date(),
-      usuarioCreacion: correoUsuarioActual,
-    };
     //alert(JSON.stringify(resultado));
 
-    await newInvoice();
+    let dataFechaAplica = new Date(data.fechaAplica);
 
-    navigate(`/detalle/${data.numero}`);
+    dataFechaAplica.setHours(0, 0, 0, 0);
+
+    let dataFechaCreacion = new Date();
+
+    dataFechaCreacion.setHours(0, 0, 0, 0);
+
+    let year = dataFechaAplica.getFullYear().toString();
+    let tipoComprobante = data.tipoComprobante;
+    let numero = data.numero.trim();
+    let observaciones = data.observaciones;
+    let formaPago = data.formaPago;
+    let banco = data.banco;
+    let chequeNumero = data.chequeNumero;
+    let fechaAplica = Timestamp.fromDate(dataFechaAplica);
+    let fechaModificacion = null;
+    let fechaCreacion = Timestamp.fromDate(dataFechaCreacion);
+    let usuarioCreacion = correoUsuarioActual ? correoUsuarioActual : "error";
+    let usuarioModificacion = "";
+
+    let lista = [
+      {
+        codigoPuc: data.codigoPuc,
+        concepto: data.concepto,
+        valor: data.valor,
+      },
+      ...data.lista,
+    ];
+
+    try {
+      await newInvoice(
+        year,
+        tipoComprobante,
+        numero,
+        observaciones,
+        formaPago,
+        banco,
+        chequeNumero,
+        usuarioCreacion,
+        usuarioModificacion,
+        fechaAplica,
+        fechaCreacion,
+        fechaModificacion,
+        lista
+      );
+
+      navigate(`/detalle/${tipoComprobante}/${year}/${numero}`);
+    } catch (error: any) {
+      setLoading(false);
+      if (error.message && typeof error.message === "string") {
+        setValues({ ...values, error: error.message });
+      } else {
+        setValues({ ...values, error: "Error inesperado" });
+      }
+    }
   };
 
   return (
@@ -155,6 +191,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
                 labelId="tipoComprobante-label"
                 id="tipoComprobante"
                 error={errors.tipoComprobante && true}
+                defaultValue=""
                 //value={age}
                 label="tipoComprobante"
                 {...register("tipoComprobante", {
@@ -163,9 +200,9 @@ const NewInvoice: React.FC = (): JSX.Element => {
                 })}
                 //onChange={handleChange}
               >
-                <MenuItem value={"Egreso"}>Egreso</MenuItem>
-                <MenuItem value={"aaaa"}>aaaa</MenuItem>
-                <MenuItem value={"bbbbb"}>bbbbb</MenuItem>
+                <MenuItem value={"egreso"}>Comprobante de egreso</MenuItem>
+                <MenuItem value={"gastos"}>Comprobante de gastos</MenuItem>
+                <MenuItem value={"ingresos"}>Comprobante de ingresos</MenuItem>
               </Select>
               <FormHelperText error={errors.tipoComprobante && true}>
                 {errors.tipoComprobante && errors.tipoComprobante.message}
@@ -209,10 +246,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
                     helperText={errors.codigoPuc && true}
                     //variant="outlined"
                     //defaultValue="Hello World"
-                    {...register("codigoPuc", {
-                      required: { value: true, message: "requerido" },
-                      // maxLength: { value: 15, message: "nombre muy largo" },
-                    })}
+                    {...register("codigoPuc")}
                   />
                 </Grid>
                 <Grid item xs={6} md={3}>
@@ -377,6 +411,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
 
           <Grid item xs={6} md={3}>
             <TextField
+              fullWidth
               id="observaciones"
               //required // le pone un asterisco para saber  que es obligatoria
               label="observaciones"
@@ -392,6 +427,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
               })}
             />
           </Grid>
+
           <Grid item xs={6} md={3}>
             <TextField
               id="formaPago"
@@ -403,10 +439,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
               helperText={errors.formaPago && errors.formaPago.message}
               //variant="outlined"
               //defaultValue="Hello World"
-              {...register("formaPago", {
-                required: { value: true, message: "requerido" },
-                // maxLength: { value: 15, message: "nombre muy largo" },
-              })}
+              {...register("formaPago")}
             />
           </Grid>
           <Grid item xs={6} md={3}>
@@ -420,10 +453,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
               helperText={errors.banco && errors.banco.message}
               //variant="outlined"
               //defaultValue="Hello World"
-              {...register("banco", {
-                required: { value: true, message: "requerido" },
-                // maxLength: { value: 15, message: "nombre muy largo" },
-              })}
+              {...register("banco")}
             />
           </Grid>
           <Grid item xs={6} md={3}>
@@ -457,10 +487,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
               helperText={errors.chequeNumero && errors.chequeNumero.message}
               //variant="outlined"
               //defaultValue="Hello World"
-              {...register("chequeNumero", {
-                required: { value: true, message: "requerido" },
-                // maxLength: { value: 15, message: "nombre muy largo" },
-              })}
+              {...register("chequeNumero")}
             />
           </Grid>
         </Grid>
@@ -468,10 +495,6 @@ const NewInvoice: React.FC = (): JSX.Element => {
         <Box sx={{ m: 1 }} />
 
         <Box>
-          <Button variant="contained" type="submit">
-            Grabar
-          </Button>
-          {"   "}
           <Button
             variant="contained"
             type="reset"

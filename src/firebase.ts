@@ -2,6 +2,14 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
+import {
+  Timestamp,
+  getFirestore,
+  CollectionReference,
+  DocumentReference,
+  collection,
+  DocumentData,
+} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,6 +31,63 @@ const app = initializeApp(firebaseConfig);
 export default app;
 export const analytics = getAnalytics(app);
 export const auth = getAuth();
+export const db = getFirestore();
 
-//! Firebase Auth
-//* recomended way to get the currrent user if there is one, by default users will be persisted forever after the  sign in
+//! add  type definitions for firebase
+// This is just a helper to add the type to the db responses
+const createCollection = <T = DocumentData>(collectionName: string) => {
+  return collection(db, collectionName) as CollectionReference<T>;
+};
+
+const createSubCollection = <T = DocumentData>(
+  collectionName: string,
+  documentName: string,
+  subCollectionName: string
+) => {
+  return collection(
+    db,
+    collectionName,
+    documentName,
+    subCollectionName
+  ) as CollectionReference<T>;
+};
+
+// Import all your model types
+export type Icomprobante = {
+  banco: string;
+  tipoComprobante: string;
+  numero: string;
+  observaciones: string;
+  usuarioCreacion: string;
+  usuarioModificacion: string | null;
+  formaPago: string;
+  fechaAplica: Timestamp;
+  fechaModificacion: Timestamp | null;
+  fechaCreacion: Timestamp;
+  chequeNumero: string;
+  lista: {
+    codigoPuc: string;
+    concepto: string;
+    valor: number;
+  }[];
+};
+
+type Iyear = {
+  //year: {DocumentReference<>DocumentReference<Icomprobante>;}
+  ultimosNumeros: {
+    egreso: number;
+    egresoDato: string;
+    gastos: number;
+    gastosDato: string;
+    ingresos: number;
+    ingresosDato: string;
+  };
+};
+// export all your collections
+export const listaComprobantes = createSubCollection<Icomprobante>(
+  "comprobantes",
+  "2021",
+  "listaComprobantes"
+);
+
+export const comprobantes = createCollection<Iyear>("comprobantes");

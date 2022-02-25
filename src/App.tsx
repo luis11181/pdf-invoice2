@@ -34,7 +34,10 @@ function App() {
             </RequireAuth>
           }
         />
-        <Route path="/detalle/:numero" element={<MainPage />} />
+        <Route
+          path="/detalle/:tipoComprobante/:year/:numero"
+          element={<MainPage />}
+        />
         <Route
           path="/counter"
           element={
