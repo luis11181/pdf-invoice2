@@ -14,7 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FormHelperText from "@mui/material/FormHelperText";
-import { useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { selectCorreo } from "../app/mainStateSlice";
 import { useAppSelector } from "../app/hooks";
 import ReactToPrint from "react-to-print";
@@ -22,6 +22,8 @@ import { useNavigate } from "react-router-dom";
 import newInvoice from "../features/invoice/newInvoice";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Timestamp } from "firebase/firestore";
+import { lastNumero } from "../features/invoice/readInvoice";
+import { log } from "console";
 
 interface IValues {
   error: null | string;
@@ -55,20 +57,27 @@ const NewInvoice: React.FC = (): JSX.Element => {
     error: null,
   });
   const [loading, setLoading] = useState(false);
+  const [ultimoNumero, setUltimoNumero] = useState<string | null>(null);
 
   const componentRef = useRef(null);
   let navigate = useNavigate();
   //const [items, setItems] = useState<Array<any>>([]);
 
+  //! react hook form methods %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
   const {
     register,
     handleSubmit,
-    //watch, // console.log(watch("example")); // watch input value by passing the name of it, and then it can trigger actions if changes
+    watch, // console.log(watch("example")); // watch input value by passing the name of it, and then it can trigger actions if changes
+    setValue,
+    getValues,
     formState: { errors },
     clearErrors,
     reset,
     control,
   } = useForm<FormValues>();
+
+  const watchTipoComprobante = watch(["tipoComprobante"]); // you can also target specific fields by their names
+  const watchFechaAplica = watch(["fechaAplica"]);
 
   const {
     fields,
@@ -78,6 +87,32 @@ const NewInvoice: React.FC = (): JSX.Element => {
     control, // control props comes from useForm (optional: if you are using FormContext)
     name: "lista", // unique name for your Field Array
   });
+
+  useEffect(() => {
+    (async () => {
+      try {
+        console.log("useeffect1");
+        let year = new Date().getFullYear().toString(); //fecha con el año actual
+        let fechaInput = getValues("fechaAplica");
+        let yearInput = new Date(fechaInput).getFullYear().toString(); // con la fecha que da el usuario
+        if (yearInput.length > 1) {
+          year = yearInput;
+        }
+        const ultimoNumeroObj = await lastNumero(year, watchTipoComprobante[0]);
+        setUltimoNumero(ultimoNumeroObj?.numeroDato);
+        //setValues((anterior) => ({ ...anterior, error: null }));
+      } catch (error: any) {
+        console.error(error);
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watchFechaAplica, watchTipoComprobante]);
+
+  if (ultimoNumero !== null) {
+    setValue("numero", ultimoNumero, {});
+  }
+
+  //! end react hook form methods %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
   const correoUsuarioActual = useAppSelector(selectCorreo);
 
