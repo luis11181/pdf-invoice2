@@ -93,11 +93,24 @@ const NewInvoice: React.FC = (): JSX.Element => {
       try {
         console.log("useeffect1");
         let year = new Date().getFullYear().toString(); //fecha con el año actual
+        console.log(year, "year1");
+
         let fechaInput = getValues("fechaAplica");
+        console.log(fechaInput, "fechaInput");
+
         let yearInput = new Date(fechaInput).getFullYear().toString(); // con la fecha que da el usuario
-        if (yearInput.length > 1) {
+        console.log(yearInput);
+
+        if (
+          yearInput !== "" &&
+          typeof yearInput === "string" &&
+          yearInput !== "NaN"
+        ) {
           year = yearInput;
         }
+
+        console.log(year, "yearf");
+
         const ultimoNumeroObj = await lastNumero(year, watchTipoComprobante[0]);
         setUltimoNumero(ultimoNumeroObj?.numeroDato);
         //setValues((anterior) => ({ ...anterior, error: null }));
@@ -253,6 +266,9 @@ const NewInvoice: React.FC = (): JSX.Element => {
               variant="outlined"
               error={errors.numero ? true : false}
               helperText={errors.numero && errors.numero.message}
+              InputLabelProps={{
+                shrink: true,
+              }}
               //variant="outlined"
               //defaultValue="Hello World"
               {...register("numero", {
@@ -498,6 +514,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
               label="fechaAplica"
               type="date"
               variant="outlined"
+              //defaultValue={new Date().toISOString().split("T")[0]}
               InputLabelProps={{
                 shrink: true,
               }}
