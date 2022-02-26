@@ -12,17 +12,40 @@
 }
 
 @media print {
+  html,
   body {
-    margin: 5rem;
+    height: initial !important;
+    overflow: initial !important;
+    background-color: white !important;
+    -webkit-print-color-adjust: exact;
+    font-size: 40%; /* 62.5% of 16px = 10px */
   }
 
-  .no-break-inside {
+  div {
+    page-break-inside: avoid;
+  }
+
+  .pageContainer {
+    display: block;
+  }
+
+  .item {
+    page-break-after: avoid;
+  }
+
+  .noBreakInside {
     /** apply this class to every component that shouldn't be cut off between to pages of your PDF/HTML */
-    break-inside: "avoid";
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 
-  .break-before {
-    /** apply this class to every component that should always display on next page */
+  /** .break-before {
+   
     break-before: "always";
-  }
+  } */
+}
+
+@page {
+  size: auto;
+  /* margin: 15mm 10mm; */
 }

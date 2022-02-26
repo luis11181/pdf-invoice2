@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { SubmitHandler, useForm, useFieldArray } from "react-hook-form";
+import logo from "../../assets/psi.png";
 import {
   Button,
   FormControl,
@@ -10,15 +10,18 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import SaveIcon from "@mui/icons-material/Save";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FormHelperText from "@mui/material/FormHelperText";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import ReactToPrint from "react-to-print";
 import { Icomprobante } from "../../firebase";
-import LoadingButton from "@mui/lab/LoadingButton";
 
 import classes from "./Print.module.css";
 
@@ -32,195 +35,295 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
 
   const componentRef = useRef(null);
 
+  interface Iprint extends Icomprobante {
+    total: number;
+  }
+
+  let print: Iprint[] = [];
+
+  props.print.forEach((element) => {
+    let total = 0;
+
+    element.lista.forEach((item) => {
+      total += Number(item.valor);
+    });
+    print.push({ ...element, total });
+  });
+
   return (
     <Box>
-      <Box
-        ref={componentRef}
-        className={`${classes.pageContainer} ${classes["no-break-inside"]}`}
+      <Box ref={componentRef}>
+        <Box className={`${classes.pageContainer}`}>
+          <Box className={` ${classes.item} ${classes.noBreakInside}`}>
+            {print.map((comprobante, indexComprobante) => {
+              return (
+                <div key={comprobante.numero}>
+                  <Box
+                    key={comprobante.numero}
 
-        //center all the text fileds indie the div
-      >
-        {props.print.map((comprobante, indexComprobante) => {
-          return (
-            <div key={comprobante.numero}>
-              <Box
-                key={comprobante.numero}
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                //noValidate
-                //autoComplete="off"
-              >
-                <Grid
-                  key={comprobante.numero}
-                  container //grid contenedor que define prorpiedades de la grilla
-                  //spacing={1}
-                  rowSpacing={1}
-                  columnSpacing={{ xs: 1, sm: 2, md: 2 }}
-                >
-                  <Grid item xs={6} md={6}>
-                    <TextField
-                      defaultValue={comprobante.numero}
-                      InputProps={{
-                        readOnly: true,
+                    //noValidate
+                    //autoComplete="off"
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+
+                        justifyContent: "space-evenly",
                       }}
-                      id="numero"
-                      variant="filled"
-                      //required // le pone un asterisco para saber  que es obligatoria
-                      label="numero"
-                      type="text"
-                    />
-                  </Grid>
+                      //noValidate
+                      //autoComplete="off"
+                    >
+                      <img src={logo} alt="logo" width={"100rem"} />{" "}
+                      {"              "}
+                      <Typography variant="h6" color={"red"}>
+                        {`${"Comprobante De "
+                          .concat(comprobante.tipoComprobante)
+                          .toUpperCase()} # ${comprobante.numero}`}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ m: 1 }} />
 
-                  {comprobante.lista.map((item, index) => {
-                    return (
-                      <Grid item xs={12} key={index}>
-                        <Box
-                          key={index}
-                          //sx={{ border: 1, backgroundColor: "primary.light" }}
-                        >
-                          <Grid
-                            container //grid contenedor que define prorpiedades de la grilla
-                            //spacing={1}
-                            key={index}
-                            rowSpacing={1}
-                            columnSpacing={{ xs: 1, sm: 2, md: 2 }}
+                    <Box
+                      sx={{
+                        display: "block",
+                        justifyContent: "start",
+                      }}
+                    >
+                      <Typography variant="body2" color={"black"}>
+                        {` PROVEEDORES DE SERVICIOS INFORMATICOS PSI COLOMBIA LTDA`}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        color={"black"}
+                        align={"left"}
+                      >
+                        {`
+                    NIT 900047962-8`}
+                      </Typography>
+                      <Typography variant="body2" color={"black"}>
+                        {` CALLE 162 # 16A-80 `}
+                      </Typography>
+                      <Typography variant="body2" color={"black"}>
+                        {` P.B.X: 6057246 `}
+                      </Typography>
+                      <Typography variant="body2" color={"black"}>
+                        {` BOGOTA, COLOMBIA `}
+                      </Typography>
+                    </Box>
+
+                    <Box sx={{ m: 1 }} />
+
+                    <TableContainer component={Paper}>
+                      <Table
+                        sx={{ minWidth: 650 }}
+                        size="small"
+                        aria-label="a dense table"
+                      >
+                        <TableHead style={{ backgroundColor: "#94908a" }}>
+                          <TableRow>
+                            <TableCell>Codigo P.U.C</TableCell>
+                            <TableCell align="right">Concepto</TableCell>
+                            <TableCell align="right">V/Total $</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {comprobante.lista.map((item, index) => {
+                            return (
+                              <TableRow
+                                key={index}
+                                sx={{
+                                  "&:last-child td, &:last-child th": {
+                                    border: 0,
+                                  },
+                                }}
+                              >
+                                <TableCell component="th" scope="row">
+                                  {item.codigoPuc}
+                                </TableCell>
+                                <TableCell align="right">
+                                  {item.concepto}
+                                </TableCell>
+                                <TableCell align="right">
+                                  {item.valor}
+                                </TableCell>
+                              </TableRow>
+                            );
+                          })}
+                          <TableRow
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
                           >
-                            <Grid item xs={4} md={4} key={index}>
-                              <TextField
-                                defaultValue={item.codigoPuc}
-                                InputProps={{
-                                  readOnly: true,
-                                }}
-                                id={`codigoPuc${index}`}
-                                //required // le pone un asterisco para saber  que es obligatoria
-                                label={`codigoPuc${index}`}
-                                type="text"
-                                variant="filled"
-                              />
-                            </Grid>
-                            <Grid item xs={4} md={4}>
-                              <TextField
-                                defaultValue={item.concepto}
-                                InputProps={{
-                                  readOnly: true,
-                                }}
-                                id={`concepto${index}`}
-                                //required // le pone un asterisco para saber  que es obligatoria
-                                label={`concepto${index}`}
-                                type="text"
-                                variant="filled"
-                              />
-                            </Grid>
-                            <Grid item xs={4} md={4}>
-                              <TextField
-                                defaultValue={item.valor}
-                                InputProps={{
-                                  readOnly: true,
-                                }}
-                                id={`valor${index}`}
-                                //required // le pone un asterisco para saber  que es obligatoria
-                                label={`valor${index}`}
-                                type="number"
-                                variant="filled"
-                              />
-                            </Grid>
-                          </Grid>
-                        </Box>
+                            <TableCell align="right">{""}</TableCell>
+                            <TableCell align="right">{"valor neto:"}</TableCell>
+                            <TableCell align="right">
+                              {comprobante.total}
+                            </TableCell>
+                          </TableRow>
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+
+                    <Grid
+                      key={comprobante.numero}
+                      container //grid contenedor que define prorpiedades de la grilla
+                      //spacing={1}
+                      rowSpacing={0}
+                      columnSpacing={{ xs: 1, sm: 0, md: 0 }}
+                    >
+                      <Grid item xs={12} md={12}>
+                        <TextField
+                          size="small"
+                          fullWidth
+                          defaultValue={comprobante.observaciones}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          id="observaciones"
+                          //required // le pone un asterisco para saber  que es obligatoria
+                          label="observaciones"
+                          type="text"
+                          variant="filled"
+                        />
                       </Grid>
-                    );
-                  })}
 
-                  <Grid item xs={12} md={12}>
-                    <TextField
-                      fullWidth
-                      defaultValue={comprobante.observaciones}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                      id="observaciones"
-                      //required // le pone un asterisco para saber  que es obligatoria
-                      label="observaciones"
-                      type="text"
-                      variant="filled"
-                    />
-                  </Grid>
+                      <Grid item xs={4} md={4}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          defaultValue={`${comprobante.chequeNumero}`}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          id="chequeNumero"
+                          //required // le pone un asterisco para saber  que es obligatoria
+                          label="Cheque #"
+                          type="text"
+                          variant="filled"
+                        />
+                      </Grid>
 
-                  <Grid item xs={3} md={3}>
-                    <TextField
-                      fullWidth
-                      defaultValue={comprobante.formaPago}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                      id="formaPago"
-                      //required // le pone un asterisco para saber  que es obligatoria
-                      label="forma Pago"
-                      type="text"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={3} md={3}>
-                    <TextField
-                      fullWidth
-                      defaultValue={comprobante.banco}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                      id="banco"
-                      //required // le pone un asterisco para saber  que es obligatoria
-                      label="banco"
-                      type="text"
-                      variant="filled"
-                    />
-                  </Grid>
-                  <Grid item xs={3} md={3}>
-                    <TextField
-                      fullWidth
-                      defaultValue={
-                        comprobante.fechaAplica
-                          .toDate()
-                          .toISOString()
-                          .split("T")[0]
-                      }
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                      id="fechaAplica"
-                      //required // le pone un asterisco para saber  que es obligatoria
-                      label="fechaAplica"
-                      type="date"
-                      variant="filled"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  </Grid>
-                  <Grid item xs={3} md={3}>
-                    <TextField
-                      fullWidth
-                      defaultValue={comprobante.chequeNumero}
-                      InputProps={{
-                        readOnly: true,
-                      }}
-                      id="chequeNumero"
-                      //required // le pone un asterisco para saber  que es obligatoria
-                      label="cheque Numero"
-                      type="text"
-                      variant="filled"
-                    />
-                  </Grid>
-                </Grid>
+                      <Grid item xs={4} md={4}>
+                        <TextField
+                          size="small"
+                          fullWidth
+                          defaultValue={`${comprobante.formaPago}`}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          id="formaPago"
+                          //required // le pone un asterisco para saber  que es obligatoria
+                          label="Forma de Pago:"
+                          type="text"
+                          variant="filled"
+                        />
+                      </Grid>
+                      <Grid item xs={4} md={4}>
+                        <TextField
+                          size="small"
+                          fullWidth
+                          defaultValue={`${comprobante.banco}`}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          id="banco"
+                          //required // le pone un asterisco para saber  que es obligatoria
+                          label="Banco:"
+                          type="text"
+                          variant="filled"
+                        />
+                      </Grid>
 
-                <Box sx={{ m: 1 }} />
-              </Box>
-              <Box sx={{ m: 1 }} />
-            </div>
-          );
-        })}
+                      <Grid item xs={4} md={4}>
+                        <TextField
+                          fullWidth
+                          size="medium"
+                          defaultValue={``}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          id="elaboro"
+                          //required // le pone un asterisco para saber  que es obligatoria
+                          label="Elaboro:"
+                          type="text"
+                          variant="filled"
+                        />
+                      </Grid>
+
+                      <Grid item xs={4} md={4}>
+                        <TextField
+                          fullWidth
+                          size="medium"
+                          defaultValue={``}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          id="Contabilizo"
+                          //required // le pone un asterisco para saber  que es obligatoria
+                          label="Contabilizo:"
+                          type="text"
+                          variant="filled"
+                        />
+                      </Grid>
+
+                      <Grid item xs={4} md={4}>
+                        <TextField
+                          fullWidth
+                          size="medium"
+                          defaultValue={``}
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          id="Firma"
+                          //required // le pone un asterisco para saber  que es obligatoria
+                          label="Firma y sello del beneficiario:"
+                          type="text"
+                          variant="filled"
+                        />
+                      </Grid>
+
+                      <Grid item xs={4} md={4}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          defaultValue={
+                            comprobante.fechaAplica
+                              .toDate()
+                              .toISOString()
+                              .split("T")[0]
+                          }
+                          InputProps={{
+                            readOnly: true,
+                          }}
+                          id="fechaAplica"
+                          //required // le pone un asterisco para saber  que es obligatoria
+                          label="Fecha de Recibido:"
+                          type="date"
+                          variant="filled"
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+
+                    <Box sx={{ m: 1 }} />
+                  </Box>
+                  <Box sx={{ m: 5 }} />
+                </div>
+              );
+            })}
+          </Box>
+        </Box>
       </Box>
       <Box sx={{ m: 3 }} />
       <Box
