@@ -207,13 +207,13 @@ const AuthForm: React.FC<IFromProps> = (props): JSX.Element => {
             </FormHelperText>
           )}
         </FormControl>
-        <Button variant="outlined" type="submit">
+        <Button variant="contained" color="secondary" type="submit">
           Sign In
         </Button>
       </Box>
       <Box sx={{ m: 1 }} />
 
-      <Button onClick={googleRegister}> Sign with Google</Button>
+      <Button onClick={googleRegister}> SignIn with Google</Button>
       <Box sx={{ m: 1 }} />
 
       <Typography variant="body1" sx={{ color: "red" }}>

@@ -4,7 +4,6 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
-
   updateProfile,
 } from "firebase/auth";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -53,8 +52,6 @@ const googleRegister = () => {
       console.log(errorCode, errorMessage, email, credential);
     });
 };
-
-
 
 const AuthForm = () => {
   const [values, setValues] = useState<IValues>({
@@ -217,14 +214,14 @@ const AuthForm = () => {
           )}
         </FormControl>
 
-        <Button variant="outlined" type="submit">
+        <Button variant="contained" color="secondary" type="submit">
           Sign Up
         </Button>
       </Box>
 
       <Box sx={{ m: 1 }} />
 
-      <Button onClick={googleRegister}> Sign with Google</Button>
+      <Button onClick={googleRegister}> SignUp with Google</Button>
       <Box sx={{ m: 1 }} />
 
       <Typography variant="body1" sx={{ color: "red" }}>

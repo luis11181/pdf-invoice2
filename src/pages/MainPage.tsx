@@ -14,7 +14,25 @@ export default function MainPage() {
   const nombre: string | null = useAppSelector(selectNombre);
 
   if (!authed) {
-    return <p>You are not logged in.</p>;
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        You are not logged in.
+        <Button
+          onClick={() => {
+            navigate("/signIn");
+          }}
+        >
+          Sign In
+        </Button>
+      </Box>
+    );
   }
 
   return (
@@ -26,7 +44,7 @@ export default function MainPage() {
         alignItems: "center",
       }}
     >
-      {`bienvenido ${nombre}`}
+      {`Bienvenido ${nombre}`}
       <Button
         onClick={() => {
           signOut(auth);

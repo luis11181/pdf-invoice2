@@ -14,16 +14,14 @@ import IconButton from "@mui/material/IconButton";
 import SaveIcon from "@mui/icons-material/Save";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FormHelperText from "@mui/material/FormHelperText";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { selectCorreo } from "../app/mainStateSlice";
 import { useAppSelector } from "../app/hooks";
-import ReactToPrint from "react-to-print";
 import { useNavigate } from "react-router-dom";
 import newInvoice from "../features/invoice/newInvoice";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Timestamp } from "firebase/firestore";
 import { lastNumero } from "../features/invoice/readInvoice";
-import { log } from "console";
 
 interface IValues {
   error: null | string;

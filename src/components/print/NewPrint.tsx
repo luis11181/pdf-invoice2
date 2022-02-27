@@ -1,15 +1,7 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import logo from "../../assets/psi.png";
-import {
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -18,7 +10,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 
 import ReactToPrint from "react-to-print";
 import { Icomprobante } from "../../firebase";
@@ -78,7 +70,23 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                       <Typography variant="h6" color={"red"}>
                         {`${"Comprobante De "
                           .concat(comprobante.tipoComprobante)
-                          .toUpperCase()} # ${comprobante.numero}`}
+                          .toUpperCase()} # ${
+                          comprobante.tipoComprobante === "egreso" ? "CE" : ""
+                        } 
+                          ${
+                            comprobante.tipoComprobante === "gastos" ? "CG" : ""
+                          }
+                          ${
+                            comprobante.tipoComprobante === "ingresos"
+                              ? "CI"
+                              : ""
+                          }
+                          -${comprobante.fechaAplica
+                            .toDate()
+                            .toISOString()
+                            .split("T")[0]
+                            .slice(2, 4)} 
+                          -${comprobante.numero}`}
                       </Typography>
                     </Box>
                     <Box sx={{ m: 1 }} />

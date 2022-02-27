@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { SubmitHandler, useForm, useFieldArray } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   Button,
   FormControl,
@@ -11,30 +11,24 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
-import SaveIcon from "@mui/icons-material/Save";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 
 import FormLabel from "@mui/material/FormLabel";
 import FormHelperText from "@mui/material/FormHelperText";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { selectCorreo } from "../app/mainStateSlice";
 import { useAppSelector } from "../app/hooks";
-import ReactToPrint from "react-to-print";
 import { useNavigate } from "react-router-dom";
-import newInvoice from "../features/invoice/newInvoice";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import { Icomprobante } from "../firebase";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
 import NewPrint from "../components/print/NewPrint";
 import getInvoices from "../features/invoice/query";
-import { log } from "console";
 import { Timestamp } from "firebase/firestore";
-import { TipsAndUpdatesOutlined } from "@mui/icons-material";
 
 interface IValues {
   error: null | string;
@@ -61,6 +55,8 @@ const Consulta: React.FC = (): JSX.Element => {
 
   const [selected, setSelected] = useState(new Set<number>());
   const [datosPrint, setDatosPrint] = useState<Icomprobante[]>([]);
+
+  const navigate = useNavigate();
 
   const correoUsuarioActual = useAppSelector(selectCorreo);
 
@@ -443,6 +439,27 @@ const Consulta: React.FC = (): JSX.Element => {
           );
         })}
       </Grid>
+
+      <Box sx={{ m: 1 }} />
+
+      {selected.size === 1 && (
+        <Button
+          variant="contained"
+          type="button"
+          onClick={() => {
+            navigate(
+              `/detalle/${
+                datos[selected.values().next().value].tipoComprobante
+              }/${datos[selected.values().next().value].fechaAplica
+                .toDate()
+                .getFullYear()}/${datos[selected.values().next().value].numero}`
+            );
+          }}
+        >
+          Ver detalle de comprobante
+        </Button>
+      )}
+
       <NewPrint print={datosPrint}></NewPrint>
 
       <Box sx={{ m: 1 }} />

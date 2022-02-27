@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
 
@@ -16,15 +16,37 @@ import Container from "@mui/material/Container";
 import logo from "../../assets/psi.png";
 import Avatar from "@mui/material/Avatar";
 
-import { green } from "@mui/material/colors";
-import Button from "@mui/material/Button";
+import { auth } from "../../firebase";
+import { signOut } from "firebase/auth";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-const pages = ["crear-comprobante", "consulta", "signIn", "counter"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+const pages = [
+  ["Home", "/"],
+  ["Nuevo Invoice", "crear-comprobante"],
+  ["Consultar", "consulta"],
+  ["Counter", "counter"],
+];
 
 const ResponsiveAppBar = () => {
+  let navigate = useNavigate();
+
+  function logOut() {
+    signOut(auth);
+    navigate("/");
+    handleCloseNavMenu();
+  }
+
+  function logIn() {
+    navigate("signIn");
+    handleCloseNavMenu();
+  }
+
+  const settings = [
+    { nombre: "SignIn", function: logIn },
+    { nombre: "Logout", function: logOut },
+  ];
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -51,14 +73,18 @@ const ResponsiveAppBar = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
-          >
-            <img src={logo} alt="logo" className={classes.logo} />
-          </Typography>
+          {
+            //  estilos para pantalla grande con xs: none se esconde para pantallas pequeñas
+          }
+          <Box sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
+            <NavLink to={"/"}>
+              <img src={logo} alt="logo" className={classes.logo} />
+            </NavLink>
+          </Box>
+
+          {
+            //  estilos para pequeña
+          }
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -91,50 +117,74 @@ const ResponsiveAppBar = () => {
             >
               {pages.map((page) => (
                 <NavLink
-                  to={page}
+                  to={page[1]}
                   className={({ isActive }) => {
                     return !isActive ? classes.inactive : classes.active;
                   }}
+                  // style={(isActive) => ({
+                  //   color: isActive ? "green" : "blue",
+                  // })}
                 >
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography textAlign="center">{page}</Typography>
+                  <MenuItem
+                    key={page[1]}
+                    onClick={handleCloseNavMenu}
+                    className={classes.menu}
+                  >
+                    <Typography
+                      textAlign="center"
+                      sx={{ color: "black", fontWeight: "bold" }}
+                    >
+                      {page[0]}
+                    </Typography>
                   </MenuItem>
                 </NavLink>
               ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h6"
-            noWrap
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-          >
-            <img src={logo} alt="logo" className={classes.logo} />
-          </Typography>
+
+          {
+            //* todo lo del menu para pantallas grandes
+          }
+
+          <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+            <NavLink to={"/"}>
+              <img src={logo} alt="logo" className={classes.logo} />
+            </NavLink>
+          </Box>
+
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <NavLink
-                to={page}
+                to={page[1]}
                 className={({ isActive }) => {
                   return !isActive ? classes.inactive : classes.active;
                 }}
               >
                 {" "}
-                <Button
-                  key={page}
+                <MenuItem
+                  key={page[1]}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "white", display: "block" }}
+                  className={classes.menu}
                 >
-                  {page}
-                </Button>
+                  <Typography
+                    textAlign="center"
+                    sx={{
+                      display: "block",
+                      fontWeight: "bold",
+                      color: "white",
+                    }}
+                  >
+                    {page[0]}
+                  </Typography>
+                </MenuItem>
               </NavLink>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar sx={{ bgcolor: green[500] }}>
+                <Avatar sx={{ bgcolor: "#616161" }}>
                   <SettingsIcon />
                 </Avatar>
                 {
@@ -159,8 +209,17 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.nombre} onClick={setting.function}>
+                  <Typography
+                    textAlign="center"
+                    sx={{
+                      display: "block",
+                      textDecoration: "none",
+                      color: "black",
+                    }}
+                  >
+                    {setting.nombre}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>

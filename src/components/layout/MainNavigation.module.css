@@ -11,34 +11,16 @@
 .logo {
   height: 2rem;
 }
-
+/* estilos del menu*/
+.menu {
+  font-weight: bold;
+}
+/* estilos active que aplican para el vav link */
 .active {
-  color: red;
+  color: "black";
+  text-decoration: underline solid red 2px;
 }
 
 .inactive {
-  color: white;
-}
-
-.nav ul {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-
-.nav li {
-  margin-left: 1.5rem;
-  font-size: 1.25rem;
-}
-
-.nav a {
   text-decoration: none;
-  color: #88dfdf;
-}
-
-.nav a:hover,
-.nav a:active,
-.nav a.active {
-  color: #e6fcfc;
 }

@@ -3,7 +3,6 @@ import AuthFormSignUp from "../components/auth/AuthSingUpForm";
 import { useState } from "react";
 import { Box, Button } from "@mui/material";
 import { useLocation } from "react-router-dom";
-import { useAppDispatch } from "../app/hooks";
 
 export default function AuthPage() {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -32,7 +31,7 @@ export default function AuthPage() {
       }}
     >
       {isSignIn ? <AuthFormSignIn from={from} /> : <AuthFormSignUp />}
-      <Button variant="outlined" onClick={handleSignForm}>
+      <Button variant="contained" onClick={handleSignForm}>
         {isSignIn ? "Sign Up" : "Sign In"}
       </Button>
     </Box>

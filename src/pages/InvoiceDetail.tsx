@@ -26,6 +26,7 @@ import { useParams } from "react-router-dom";
 import readInvoice from "../features/invoice/readInvoice";
 import { Icomprobante } from "../firebase";
 import LoadingSpinner from "../components/UI/LoadingSpinner";
+import NewPrint from "../components/print/NewPrint";
 
 interface IValues {
   error: null | string;
@@ -48,6 +49,7 @@ const InvoiceDetail: React.FC = (): JSX.Element => {
   const [error, setError] = useState(false);
 
   const [datos, setDatos] = useState<Icomprobante>({} as Icomprobante);
+  const [datosPrint, setDatosPrint] = useState<Icomprobante[]>([]);
 
   const correoUsuarioActual = useAppSelector(selectCorreo);
 
@@ -58,6 +60,7 @@ const InvoiceDetail: React.FC = (): JSX.Element => {
         setDatos(datos);
         setError(false);
         setLoading(false);
+        setDatosPrint([datos]);
       } catch (error: any) {
         setError(true);
         setLoading(false);
@@ -336,14 +339,7 @@ const InvoiceDetail: React.FC = (): JSX.Element => {
             Modificar por hacer
           </Button>
           {"   "}
-          <Button
-            color="secondary"
-            variant="contained"
-            type="button"
-            onClick={() => {}}
-          >
-            Imprimir por hacer
-          </Button>
+          <NewPrint print={datosPrint}></NewPrint>
         </Box>
       </Box>
       <Box sx={{ m: 1 }} />

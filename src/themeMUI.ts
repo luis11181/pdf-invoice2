@@ -20,6 +20,7 @@ const theme = createTheme({
     danger: orange[500],
   },
   palette: {
+    mode: "light", //define el modo y de forma automatica el "dark para los colores a otro estilo"
     primary: {
       light: "#757ce8",
       main: "#3f50b5",
