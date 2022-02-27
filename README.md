@@ -1,6 +1,6 @@
 # Pdf invoice generator
 
-This aplication is meant to facilitate the creation, storage, quering and generation of pdf invoices to print them.
+This aplication is meant to facilitate the creation, storage, quering and generation of invoices to print them in pdf format.
 
 Due to the non intensive use expected for this application, it is created with react and firebase, achieving a free online app with all the necessary functionalities
 
