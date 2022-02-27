@@ -2,9 +2,9 @@
 
 This aplication is meant to facilitate the creation, storage, quering and generation of pdf invoices to print them.
 
-Due to the non intensive use expected for application, it is created with react and firebase, having a free application online with all the necessary functionalities
+Due to the non intensive use expected for this application, it is created with react and firebase, achieving a free online app with all the necessary functionalities
 
-This hosted page gives read and write permission only to specific users
+This hosted page has read and write permission blocked, so must functionalities will not be availiable for this online demo
 
 ## Demo
 Create new invoice page 
@@ -15,9 +15,9 @@ Query invoices
 
 <img width="622" alt="search" src="https://user-images.githubusercontent.com/80784724/155864853-9be82eb0-529c-4b7a-bb4a-bbd202e0595b.png">
 
-print selected Invoices
+Print selected Invoices in pdf format
 
-<img width="395" alt="pdf" src="https://user-images.githubusercontent.com/80784724/155864888-aa66f67e-5c72-4e47-a549-cd3e10b0932f.png">
+![pdf](https://user-images.githubusercontent.com/80784724/155864994-9edc129a-6fa4-4fdf-b516-33cea8b71299.jpg)
 
 view detail data
 
