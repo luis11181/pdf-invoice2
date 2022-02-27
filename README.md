@@ -4,7 +4,7 @@ This aplication is meant to facilitate the creation, storage, quering and genera
 
 Due to the non intensive use expected for this application, it is created with react and firebase, achieving a free online app with all the necessary functionalities
 
-This hosted page has read and write permission blocked, so must functionalities will not be availiable for this online demo
+This hosted page has read and write permission blocked, so most functionalities will not be availiable for this online demo
 
 ## Demo
 Create new invoice page 
