@@ -146,8 +146,8 @@ const NewInvoice: React.FC = (): JSX.Element => {
     let numero = data.numero.trim();
     let numeroValor = Number(data.numero.trim().replace(/\D+$/g, ""));
     let observaciones = data.observaciones;
-    let formaPago = data.formaPago;
-    let banco = data.banco;
+    let formaPago = "Efectivo"; //data.formaPago; //cambio
+    let banco = "Davivienda"; //data.banco;
     let chequeNumero = data.chequeNumero;
     let fechaAplica = Timestamp.fromDate(dataFechaAplica);
     let fechaModificacion = null;

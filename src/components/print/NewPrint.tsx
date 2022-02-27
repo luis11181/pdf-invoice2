@@ -16,6 +16,7 @@ import ReactToPrint from "react-to-print";
 import { Icomprobante } from "../../firebase";
 
 import classes from "./Print.module.css";
+import NumberFormat from "react-number-format"; //cambio //anadi el paquete
 
 interface Iprops {
   print: Icomprobante[];
@@ -152,7 +153,8 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                                   {item.concepto}
                                 </TableCell>
                                 <TableCell align="right">
-                                  {item.valor}
+                                  $ {item.valor.toString().slice(0, 3)},
+                                  {item.valor.toString().slice(3, 8)}
                                 </TableCell>
                               </TableRow>
                             );
@@ -160,12 +162,14 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                           <TableRow
                             sx={{
                               "&:last-child td, &:last-child th": { border: 0 },
+                              //cambio
                             }}
                           >
                             <TableCell align="right">{""}</TableCell>
                             <TableCell align="right">{"valor neto:"}</TableCell>
                             <TableCell align="right">
-                              {comprobante.total}
+                              $ {comprobante.total.toString().slice(0, 3)},
+                              {comprobante.total.toString().slice(3, 8)}
                             </TableCell>
                           </TableRow>
                         </TableBody>
@@ -215,7 +219,8 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                         <TextField
                           size="small"
                           fullWidth
-                          defaultValue={`${comprobante.formaPago}`}
+                          //defaultValue={`${comprobante.formaPago}`} //cambio
+                          defaultValue="Efectivo"
                           InputProps={{
                             readOnly: true,
                           }}
@@ -230,7 +235,8 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                         <TextField
                           size="small"
                           fullWidth
-                          defaultValue={`${comprobante.banco}`}
+                          //defaultValue={`${comprobante.banco}`} //cambio
+                          defaultValue="Davivienda"
                           InputProps={{
                             readOnly: true,
                           }}
