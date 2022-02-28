@@ -119,7 +119,16 @@ const NewInvoice: React.FC = (): JSX.Element => {
   }, [watchTipoComprobante]);
 
   if (ultimoNumero !== null) {
-    setValue("numero", ultimoNumero, {});
+    let numerosiguiente;
+    if (Number(ultimoNumero) < 10) {
+      numerosiguiente = `00${+(parseInt(ultimoNumero) + 1)}`;
+    }
+
+    numerosiguiente =
+      Number(ultimoNumero) < 100
+        ? `0${+(parseInt(ultimoNumero) + 1)}`
+        : `${parseInt(ultimoNumero) + 1}`;
+    setValue("numero", numerosiguiente, {}); //cambio
   }
 
   //! end react hook form methods %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -146,8 +155,8 @@ const NewInvoice: React.FC = (): JSX.Element => {
     let numero = data.numero.trim();
     let numeroValor = Number(data.numero.trim().replace(/\D+$/g, ""));
     let observaciones = data.observaciones;
-    let formaPago = "Efectivo"; //data.formaPago; //cambio
-    let banco = "Davivienda"; //data.banco;
+    let formaPago = "EFECTIVO"; //data.formaPago; //cambio
+    let banco = "DAVIVIENDA"; //data.banco;
     let chequeNumero = data.chequeNumero;
     let fechaAplica = Timestamp.fromDate(dataFechaAplica);
     let fechaModificacion = null;

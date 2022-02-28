@@ -85,10 +85,10 @@ type Iyear = {
   };
 };
 // export all your collections
-export const listaComprobantes = createSubCollection<Icomprobante>(
-  "comprobantes",
-  "2021",
-  "listaComprobantes"
-);
+// export const listaComprobantes = createSubCollection<Icomprobante>(
+//   "comprobantes",
+//   "2022", //cambio
+//   "listaComprobantesegreso"
+// );
 
 export const comprobantes = createCollection<Iyear>("comprobantes");
