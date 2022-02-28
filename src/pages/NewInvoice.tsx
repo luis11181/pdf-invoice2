@@ -374,7 +374,6 @@ const NewInvoice: React.FC = (): JSX.Element => {
                         //defaultValue="Hello World"
 
                         {...register(`lista.${index}.codigoPuc` as const, {
-                          required: { value: true, message: "requerido" },
                           // maxLength: { value: 15, message: "nombre muy largo" },
                         })}
                       />

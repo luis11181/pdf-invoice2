@@ -9,14 +9,13 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
+import NumberFormat from "react-number-format";
 import { useRef } from "react";
 
 import ReactToPrint from "react-to-print";
 import { Icomprobante } from "../../firebase";
 
 import classes from "./Print.module.css";
-import NumberFormat from "react-number-format"; //cambio //anadi el paquete
 
 interface Iprops {
   print: Icomprobante[];
@@ -153,8 +152,12 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                                   {item.concepto}
                                 </TableCell>
                                 <TableCell align="right">
-                                  $ {item.valor.toString().slice(0, 3)},
-                                  {item.valor.toString().slice(3, 8)}
+                                  <NumberFormat
+                                    value={item.valor}
+                                    displayType={"text"}
+                                    thousandSeparator={true}
+                                    prefix={"$"}
+                                  />
                                 </TableCell>
                               </TableRow>
                             );
@@ -168,8 +171,12 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                             <TableCell align="right">{""}</TableCell>
                             <TableCell align="right">{"valor neto:"}</TableCell>
                             <TableCell align="right">
-                              $ {comprobante.total.toString().slice(0, 3)},
-                              {comprobante.total.toString().slice(3, 8)}
+                              <NumberFormat
+                                value={comprobante.total}
+                                displayType={"text"}
+                                thousandSeparator={true}
+                                prefix={"$"}
+                              />
                             </TableCell>
                           </TableRow>
                         </TableBody>
