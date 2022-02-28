@@ -142,7 +142,7 @@ const NewInvoice: React.FC = (): JSX.Element => {
 
     //alert(JSON.stringify(resultado));
 
-    let dataFechaAplica = new Date(data.fechaAplica);
+    let dataFechaAplica = new Date(`${data.fechaAplica}T00:00:00`);
 
     dataFechaAplica.setHours(0, 0, 0, 0);
 

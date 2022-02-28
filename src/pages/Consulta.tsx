@@ -29,6 +29,7 @@ import LoadingSpinner from "../components/UI/LoadingSpinner";
 import NewPrint from "../components/print/NewPrint";
 import getInvoices from "../features/invoice/query";
 import { Timestamp } from "firebase/firestore";
+import { log } from "console";
 
 interface IValues {
   error: null | string;
@@ -83,7 +84,11 @@ const Consulta: React.FC = (): JSX.Element => {
     setSelected(new Set());
     //console.log(data.fechaDesde);
     let year = currentYear;
-    let yearInput = new Date(data.fechaDesde).getFullYear().toString();
+    //toca poner la zona horaria a la del primer mundo
+    let yearInput = new Date(`${data.fechaDesde}T00:00:00`)
+      .getFullYear()
+      .toString();
+
     let fechaDesde = Timestamp.fromDate(new Date(data.fechaDesde));
     let fechaHasta = Timestamp.fromDate(new Date(data.fechaHasta));
     let numeroDesde = Number(data.numero.replace(/\D+$/g, ""));
