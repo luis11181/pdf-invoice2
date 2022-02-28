@@ -63,9 +63,9 @@ const AuthForm: React.FC<IFromProps> = (props): JSX.Element => {
   };
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    alert(JSON.stringify(data));
+    //alert(JSON.stringify(data));
 
-    console.log(data);
+    // console.log(data);
     signInWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         // Signed in
@@ -82,7 +82,7 @@ const AuthForm: React.FC<IFromProps> = (props): JSX.Element => {
           ...values,
           error: errorMessage,
         });
-        console.log(errorCode, errorMessage);
+        // console.log(errorCode, errorMessage);
       });
   };
 
@@ -162,12 +162,12 @@ const AuthForm: React.FC<IFromProps> = (props): JSX.Element => {
           //variant="outlined"
           //defaultValue="Hello World"
           {...register("email", {
-            required: { value: true, message: "requerido" },
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
               message: "correo no valido",
             },
+            required: { value: true, message: "requerido" },
             // maxLength: { value: 15, message: "nombre muy largo" },
           })}
         />

@@ -74,9 +74,9 @@ const AuthForm = () => {
   };
 
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    alert(JSON.stringify(data));
+    // alert(JSON.stringify(data));
 
-    console.log(data);
+   // console.log(data);
 
     createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
