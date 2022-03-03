@@ -109,10 +109,10 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                     NIT 900047962-8`}
                       </Typography>
                       <Typography variant="body2" color={"black"}>
-                        {` CALLE 162 # 16A-80 `}
+                        {` CARRERA 16C # 154-80`}
                       </Typography>
                       <Typography variant="body2" color={"black"}>
-                        {` P.B.X: 6057246 `}
+                        {` P.B.X: 5970235 `}
                       </Typography>
                       <Typography variant="body2" color={"black"}>
                         {` BOGOTA, COLOMBIA `}
@@ -127,7 +127,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                         size="small"
                         aria-label="a dense table"
                       >
-                        <TableHead style={{ backgroundColor: "#94908a" }}>
+                        <TableHead style={{ backgroundColor: "#e6e6e6" }}>
                           <TableRow>
                             <TableCell>Codigo P.U.C</TableCell>
                             <TableCell align="right">Concepto</TableCell>
@@ -202,7 +202,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                           //required // le pone un asterisco para saber  que es obligatoria
                           label="observaciones"
                           type="text"
-                          variant="filled"
+                          variant="standard"
                         />
                       </Grid>
 
@@ -218,7 +218,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                           //required // le pone un asterisco para saber  que es obligatoria
                           label="Cheque #"
                           type="text"
-                          variant="filled"
+                          variant="standard"
                         />
                       </Grid>
 
@@ -235,7 +235,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                           //required // le pone un asterisco para saber  que es obligatoria
                           label="Forma de Pago:"
                           type="text"
-                          variant="filled"
+                          variant="standard"
                         />
                       </Grid>
                       <Grid item xs={4} md={4}>
@@ -251,7 +251,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                           //required // le pone un asterisco para saber  que es obligatoria
                           label="Banco:"
                           type="text"
-                          variant="filled"
+                          variant="standard"
                         />
                       </Grid>
 
@@ -270,7 +270,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                           //required // le pone un asterisco para saber  que es obligatoria
                           label="Elaboro:"
                           type="text"
-                          variant="filled"
+                          variant="standard"
                         />
                       </Grid>
 
@@ -289,7 +289,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                           //required // le pone un asterisco para saber  que es obligatoria
                           label="Contabilizo:"
                           type="text"
-                          variant="filled"
+                          variant="standard"
                         />
                       </Grid>
 
@@ -308,7 +308,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                           //required // le pone un asterisco para saber  que es obligatoria
                           label="Firma y sello del beneficiario:"
                           type="text"
-                          variant="filled"
+                          variant="standard"
                         />
                       </Grid>
 
@@ -329,7 +329,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
                           //required // le pone un asterisco para saber  que es obligatoria
                           label="Fecha de Recibido:"
                           type="date"
-                          variant="filled"
+                          variant="standard"
                           InputLabelProps={{
                             shrink: true,
                           }}
@@ -345,6 +345,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
             })}
           </Box>
         </Box>
+        <Box sx={{ m: 1 }} />
       </Box>
       <Box sx={{ m: 3 }} />
       <Box
