@@ -51,12 +51,9 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
               return (
                 <div key={comprobante.numero}>
                   <Box
-                    key={comprobante.numero}
-
-                    //noValidate
-                    //autoComplete="off"
+                    key={comprobante.numero} //noValidate                    //autoComplete="off"
                   >
-                    <Box> {""}</Box>
+                    <Box sx={{ m: 3 }} />
                     <Box
                       sx={{
                         display: "flex",
@@ -348,7 +345,7 @@ const NewPrint: React.FC<Iprops> = (props): JSX.Element => {
         </Box>
         <Box sx={{ m: 1 }} />
       </Box>
-      <Box sx={{ m: 3 }} />
+      <Box sx={{ m: 1 }} />
       <Box
         sx={{
           //center content inside
