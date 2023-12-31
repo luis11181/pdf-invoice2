@@ -18,8 +18,8 @@
     overflow: initial !important;
     background-color: white !important;
     -webkit-print-color-adjust: exact;
-    font-size: 40%; /* 62.5% of 16px = 10px */
-    margin: 1%;
+    font-size: 80%; /* 62.5% of 16px = 10px */
+    margin: 2%;
   }
 
   div {
